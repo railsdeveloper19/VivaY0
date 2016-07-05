@@ -1,0 +1,11 @@
+<div class="panel col-md-11" style="margin-left:40px;">
+  <h1><%= @posts.blank? ? 'No Matching Post Found' : 'Matching Posts'%><small style="color:<%=(current_user.bg_color.blank? || current_user.bg_color == 'white') ? 'darkred' : current_user.bg_color%>;"> Total<span class="badge"><%=@posts.size%></span></small><a class="pull-right" href="<%=root_path%>" title="Home"><%=image_tag '/assets/back_home.png',:style=>"height:50px;margin-right:10px;"%></a></h1>
+  <br/>
+  <div style ="border-bottom:1px solid grey;"></div><br/>
+  <%=render :partial => "posts/grid_view_post"%>
+</div>
+<script>
+  <%if !current_user.bg_color.blank?%>
+    $('body').css("background",'<%=current_user.bg_color%>');
+  <%end%>
+</script>

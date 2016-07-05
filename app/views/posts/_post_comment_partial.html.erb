@@ -1,0 +1,41 @@
+<!-- Blog Post -->
+
+<!-- Title -->
+  <div id="post_comment_div" value="<%=post.id%>"></div>
+  <h3><%=post.title%></h3>
+
+  <!-- Author -->
+  <p class="lead">
+      by <a href="#"><%=!post.user.first_name.blank?  ? post.user.first_name : post.user.email.split('@')[0] %></a>
+  </p>
+
+  <hr>
+
+  <!-- Date/Time -->
+  <p><span class="glyphicon glyphicon-time"></span> Created on <%=display_event_time(post)%></p>
+
+
+  <!-- Preview Image -->
+  <%if !post.photos.blank?%>
+    <%=image_tag serve_post_path(post.photos.first),:style=>"width:800px;height:300px;",:class=>"img-responsive" %>
+    <small style="color:gray"><%=post.photos.first.description%></small>
+  <%#else%>
+<!--
+    <img alt="" src="http://placehold.it/800x300" class="img-responsive">
+-->
+  <hr>
+  <%end%>
+  
+ 
+
+  <!-- Post Content -->
+  <p class="lead"><%= post.text.html_safe rescue nil%></p>
+
+  <hr>
+
+  <!-- Blog Comments -->
+  <div id = "comment_<%=post.id%>">
+    <%= render :partial => 'posts/comment', :locals => {:post => post, :comments => comments} %>
+  </div>
+
+   

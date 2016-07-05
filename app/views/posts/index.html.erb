@@ -1,0 +1,107 @@
+
+<div class="col-lg-12">
+  
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <%if !@index_posts.blank?%>
+    <div class="col-lg-8">
+      <% @index_posts.each do |post|%>
+        <div class="row card">
+          <div class="col-lg-2" style="margin-top:20px;">
+            <%if !post.user.photos.blank?%>
+              <%=image_tag serve_post_path(post.user.photos.first),:width=>"80" ,:height=>"80",:class=>"img-responsive"%>
+            <%else%>
+              <%=image_tag "default_avtar.jpeg",:width=>"80" ,:height=>"80",:class=>"img-responsive"%>
+            <%end%>
+          </div>
+          <% comments = get_comments(post)%>
+          <div id="show_post_comment_div" class="col-lg-8">
+            <%=render :partial=>"/posts/post_comment_partial",:locals=>{:post=>post,:comments => comments}%>
+          </div>
+        </div>
+      <%end%>
+    </div>
+    <div class="col-lg-2"></div>
+      <%#= render :partial => 'posts/all_post_partial'%>
+    <%else%>
+      <%= render :partial => 'posts/welcome'%>
+    <%end%>
+  </div>
+</div>
+
+<script> 
+  $(document).on('keypress','.post_comment',function(e){
+    if (e.which == 13){
+      var comment = $(this).val();
+      var post_id = $(this).attr('data-post');
+      var no_click = parseInt(click_number) - 1;
+      $.ajax({
+        url : "/posts/"+post_id+"/save_comment",
+        method: 'get',
+        data: {'comment' : comment,'no_click':no_click}
+      });
+    }
+  });
+  $(document).on('click', '.view_previous',function(){
+    var no_click = click_number;
+    var post_id = $(this).attr('data-post');
+    $.ajax({
+      url : "/posts/"+post_id+"/refresh_comments",
+      method: 'get',
+      data: {'no_click' : no_click},
+      success: function(){
+                 click_number = parseInt(no_click) + 1 ;
+               }  
+    });
+  });
+  
+  
+  $(document).on('click','#like_div',function(){
+    var like_unlike =  $(this).text();
+    var post_id = $('#post_comment_div').attr('value');
+    if ( like_unlike == 'Like'){
+      $('#like_count').text(parseInt($('#like_count').text()) + 1);
+      $(this).text('Unlike');
+    }else{
+      $('#like_count').text(parseInt($('#like_count').text()) - 1);
+      $(this).text('Like');
+     }
+    $.ajax({
+      url : "/posts/"+post_id+"/like_unlike_post_and_comment",
+      method: 'post',
+      data: {'like_unlike' : like_unlike}
+    });
+  });
+  $(".post_div a").on('click',function(){
+    var post_id = $(this).attr('value');
+    $.ajax({
+      url : "/posts/"+post_id+"/show_post_and_comment",
+      method : 'get',
+      data :{'post_id' : post_id},
+      success: function(){
+                 click_number = 2;
+                 $('.post_div').each(function(){
+                    $(this).css('border-left','');
+                  });
+               }  
+    })
+  });
+
+  
+  //~ setInterval(
+    //~ function(){
+      //~ if($('#delete_notification li').hasClass('open') || $('#login_div li').hasClass('open')){
+        //~ is_refresh = false;
+      //~ }
+      //~ if(is_refresh == true){
+        //~ var no_click = parseInt(click_number) - 1;
+        //~ var post_id = $('#post_comment_div').attr('value');
+        //~ $.ajax({
+          //~ url : '/posts/'+post_id+'/refresh_comments',
+          //~ method: 'get',
+          //~ data: {'no_click' : no_click}
+        //~ });
+      //~ }
+    //~ },5000
+  //~ );        
+</script>

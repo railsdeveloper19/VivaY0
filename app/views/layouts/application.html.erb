@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vivayo</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <style>
+    .w10{
+      width : 10.667%;
+    }
+    .w38{
+      width:38.333%
+    }
+  </style>
+  <body class="homepage">
+    <header id="header">
+
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+            
+            <div class="col-sm-5">
+              <div class="top-number"><p><i class="fa fa-phone-square"></i>+0123 456 70 90</p></div>
+            </div>
+            
+            <div class="col-sm-4 w38">
+              
+              <div class="social">
+              
+                <ul class="social-share">
+                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
+                </ul>
+
+                <div class="search">
+                  <form role="form">
+                    <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                    <i class="fa fa-search"></i>
+                  </form>
+               </div>
+  
+              </div>
+            </div>
+            <div class="col-sm-2 w10">
+              <div class="social">
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VBUZJZ2QWMGNG" class="btn-sm btn-success" type="submit"><i class="fa fa-heart"></i> Donate</a>
+              </div>
+            </div>
+            <div class="col-sm-1" >
+              <div class="">
+               <a class="btn-sm btn-info" href="<%=posts_path%>"><span class="fa fa-lock" aria-hidden="true"></span> Login</a>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-inverse" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+              
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<%=root_path%>"><img style="height:40px;" src="/assets/logo.png" alt="logo"></a>
+            </div>
+    
+            <div class="collapse navbar-collapse navbar-right">
+              <ul class="nav navbar-nav">
+<!--
+                <li><a href="<%#=paypal_url(root_path)%>">Donate</a></li>
+-->
+                
+                <li class="<%=params['action'] == "index" ? 'active': ''%>"><a href="<%=root_path%>">Home</a></li>
+                <li class="<%=params['action'] == "about" ? 'active': ''%>"><a href="<%=home_about_path%>">Who we are?</a></li>
+                <li class="<%=params['action'] == "service" ? 'active': ''%>"><a href="<%=home_service_path%>">What we do?</a></li>
+<!--
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="blog-item.html">Blog Single</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="404.html">404</a></li>
+                        <li><a href="shortcodes.html">Shortcodes</a></li>
+                    </ul>
+                </li>
+                <li><a href="blog.html">Blog</a></li> 
+-->
+                <li class="<%=params['action'] == "contact" ? 'active': ''%>"><a href="<%=home_contact_path%>">How to Reach Us</a></li>  
+                                  
+              </ul>
+            
+            </div>
+             
+        </div><!--/.container-->
+      </nav><!--/nav-->
+    </header><!--/header-->
+
+    <%= yield %>
+    
+    <footer id="footer" class="midnight-blue">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+              &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">vivayo Pvt. Ltd.</a>. All Rights Reserved.
+          </div>
+          <div class="col-sm-6">
+            <ul class="pull-right">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Faq</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

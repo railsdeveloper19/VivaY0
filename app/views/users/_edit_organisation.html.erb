@@ -1,0 +1,35 @@
+<!-- /.row -->
+<div class="row">
+  <form role="form" method="post" accept-charset="UTF-8" action="<%=user_path(current_user.id)%>">
+    <div class="col-lg-6">
+      <div class="form-group">
+          <label>Organisation Name</label>
+          <input type="text" name="user[first_name]" value="<%=current_user.first_name%>" class="form-control" placeholder="First name">
+      </div>
+      <div class="form-group">
+          <label>Address</label>
+          <textarea name="user[address]" rows="3" class="form-control"><%=current_user.address%></textarea>
+      </div>
+      <div class="form-group">
+          <label>Contact no.</label>
+          <input type="text" name="user[contact]" placeholder="eg: 000-00-0000000" data-mask="000-00-0000000" class="form-control input-mask" maxlength="14" autocomplete="off" value="<%=current_user.contact%>">
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="form-group">
+          <label>Foundation Date</label>
+          <input class="form-control input-mask" name="user[dob]" value="<%=current_user.dob%>" type="text" placeholder="eg: 23/05/2014" data-mask="00/00/0000" maxlength="10" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Objective</label>
+        <textarea rows="2" class="form-control" name="user[objective]" ><%=current_user.objective%></textarea>
+      </div>
+      <div class="pull-right">
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-default" type="reset">Reset</button>
+      </div>
+    </div>
+    
+  </form>
+</div>
+<!-- /.row -->

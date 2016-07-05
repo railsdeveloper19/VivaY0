@@ -1,0 +1,94 @@
+<!-- Page Heading -->
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10 card">
+    <h1 class="page-header">
+        Edit Profile
+        <span style='bottom:0px;' class="small pull-right"><%=current_user.email%></span>
+    </h1>
+   
+    <ol class="breadcrumb">
+      <li>
+          <i class="fa fa-home"></i>  <a href="<%=posts_path%>">Home</a>
+      </li>
+      <li class="active">
+          <i class="fa fa-edit"></i> Profile
+      </li>
+    </ol>
+  
+
+<!-- /.row -->
+<div class="row">
+  <form role="form" method="post" accept-charset="UTF-8" action="<%=user_path(current_user.id)%>">
+    <div class="col-lg-6">
+      <div class="form-group">
+          <label>First name</label>
+          <input type="text" name="user[first_name]" value="<%=current_user.first_name%>" class="form-control" placeholder="First name">
+      </div>
+
+      <div class="form-group">
+          <label>Last name</label>
+          <input name="user[last_name]" value="<%=current_user.last_name%>" class="form-control" placeholder="Last name">
+      </div>
+      <div class="form-group">
+          <label>State</label>
+
+        <%=select_tag "user[state]", options_for_select([ "Madhya Pradesh", "Maharastra","New Delhi","Uttar Pradesh","Bihar" ], current_user.state) , :class=>"form-control"%>
+      </div>
+      <div class="form-group">
+          <label>Address</label>
+          <textarea name="user[address]" rows="3" class="form-control"><%=current_user.address%></textarea>
+      </div>
+
+      <div class="form-group">
+          <label>Gender</label>
+          <label class="radio-inline">
+              <input type="radio" <%=current_user.gender == 'male' ? "checked" : ''%> value="male" name="user[gender]">Male
+          </label>
+          <label class="radio-inline">
+              <input type="radio" <%=current_user.gender == 'female' ? "checked" : ''%> value="female" name="user[gender]">Female
+          </label>
+      </div>
+       <div class="form-group">
+          <label>Date of birth</label>
+          <input class="form-control input-mask" name="user[dob]" value="<%=current_user.dob%>" type="text" placeholder="eg: 23/05/2014" data-mask="00/00/0000" maxlength="10" autocomplete="off">
+          
+      </div>
+      <div class="form-group">
+          <label>Contact no.</label>
+          <input type="text" name="user[contact]" placeholder="eg: 000-00-0000000" data-mask="000-00-0000000" class="form-control input-mask" maxlength="14" autocomplete="off" value="<%=current_user.contact%>">
+      </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Highest Qualification</label>
+            <input type="text" name="user[qualification]" class="form-control" value="<%=current_user.qualification%>"></input>
+        </div>
+        <div class="form-group">
+            <label>Occupation</label>
+            <input type="text" name="user[occupation]" class="form-control" value="<%=current_user.occupation%>"></input>
+        </div>
+        <div class="form-group">
+            <label>Career Objective</label>
+            <textarea rows="2" class="form-control" name="user[objective]" ><%=current_user.objective%></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Work Exp. with Name of Organization</label>
+            <input class="form-control" name="user[work]" value="<%=current_user.work%>"></input>
+        </div>
+        <div class="form-group">
+            <label>Few words</label><p>(ur hobbies, interest, anything u want to say)</p>
+            <textarea rows="3" name="user[few_words]" class="form-control"><%=current_user.few_words%></textarea>
+        </div>
+        <div class="pull-right">
+      <button class="btn btn-primary" type="submit">Submit</button>
+      <button class="btn btn-default" type="reset">Reset</button>
+    </div>.
+    </div>
+    
+  </form>
+</div>
+</div>
+</div>
+<!-- /.row -->

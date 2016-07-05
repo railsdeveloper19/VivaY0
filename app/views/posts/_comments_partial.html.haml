@@ -1,0 +1,96 @@
+-if comments.present?
+  - comments.each do |comment|
+    %div.comment_row
+      %div{:class =>"media", :id=>"media_#{comment.id}"} 
+        %a.pull-left
+          - if !comment.user.photos.blank?
+            = image_tag serve_post_path(comment.user.photos.first),:style=>"height:64px;width:64px;"
+          - else
+            = image_tag "default_avtar.jpeg" ,:style=>"height:64px;width:64px;"
+        .media-body
+          %h4.media-heading
+            = !comment.user.first_name.nil? ? comment.user.first_name.titleize : comment.user.email.split('@')[0].titleize
+            %small
+              = display_event_time(comment)
+          %span{id: "comment_body_#{comment.id}"}= smileys(comment.body)
+          %div{id:"textarea_comment_#{comment.id}",:class=>"chktextarea", :'data-comment_id'=>"#{comment.id}" ,:style=>"display:none;"}
+            %textarea.form-control{:rows=>"1" ,id:"edited_comment_#{comment.id}"}= smileys(comment.body)
+            %div.pull-right{:style=>"margin-top:6px;"}
+              %a{:href=>"javascript:void(0);",:class =>"label label-primary" ,id:"save_comment",:onclick=>"save_comment(#{comment.id});"}Save &nbsp;
+              %a{:href=>"javascript:void(0);" ,:class =>"label label-default", id:"cancel_comment" ,:onclick => "cancel_comment(#{comment.id});"}Cancel
+          .pull-right{id:"edit_btn_#{comment.id}",:style=>"margin-top:10px;"}
+            -if (user_signed_in? && (current_user.id == comment.user.id) || (current_user.user_type == "admin" ))
+              %a{:style =>"margin-left:5px;text-decoration:none;",:'data-comment_id'=>"#{comment.id}" ,:class=>"edit_comment",:'data-refresh'=>"false",:href=>"javascript:void(0);"}
+                EDIT
+              %a{:style =>"margin-left:5px;text-decoration:none;",:'data-comment_id'=>"#{comment.id}",:class=>"delete_comment",:href=>"javascript:void(0);"}
+                DELETE
+        %hr
+  -if post.comments.size > comments.size
+    %div{:style=>"text-align:center;background:lightgrey;border-radius:10px"}
+      %a{:href=>"javascript:void(0);", :class=>"view_previous" , :'data-post'=>"#{post.id}",:style=>"text-decoration:none;"}
+        %div.dropup
+          View Previous
+          %i.fa.fa-caret-square-o-down
+    %br      
+- else
+  .alert.alert-warning
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button",:style=>"margin-right:15px;"} &times;
+    There is no comments to display
+:javascript
+  var comment_id = '';
+  var comment = '';
+  $(".edit_comment").on('click',function(){ 
+    $(".chktextarea").each(function(){
+      var cmt_id = $(this).attr('data-comment_id');
+      cancel_comment(cmt_id);
+    });
+    
+    is_refresh = false;
+    comment_id = $(this).attr('data-comment_id');
+    comment = $("#comment_body_"+comment_id).text().trim();
+    $("#edit_btn_"+comment_id).hide();
+    $("#comment_body_"+comment_id).hide();
+    $("#textarea_comment_"+comment_id).show();
+    
+  });
+
+  var save_comment = function(comment_id){
+    var new_comment = $("#edited_comment_"+comment_id).val().trim();
+    $.ajax({
+      url : "/posts/"+comment_id+"/edit_and_delete_comment",
+      method: 'get',
+      data: {'comment' : new_comment ,'from_edit' : true}
+    }).success(function(){
+        is_refresh = true;
+        $("#comment_body_"+comment_id).text(new_comment);
+        cancel_comment(comment_id)
+      });
+  }
+    
+  var cancel_comment = function(comment_id){
+    $("#edit_btn_"+comment_id).show();
+    $("#comment_body_"+comment_id).show();
+    $("#textarea_comment_"+comment_id).hide();
+    is_refresh = true;
+  }
+
+  $(".delete_comment").on('click',function(){
+    is_refresh = false;
+    var comment_id = $(this).attr('data-comment_id');
+    if(confirm("Are you sure?")){
+      $.ajax({
+        url : "/posts/"+comment_id+"/edit_and_delete_comment",
+        method : 'get',
+        data :{'from_delete' : true}
+      }).success(function(){
+          $("#media_"+comment_id).hide();
+            is_refresh = true;
+        });
+    }
+    is_refresh = true;
+  });
+    
+
+
+  
+  

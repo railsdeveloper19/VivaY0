@@ -1,0 +1,51 @@
+<%= form_for(@post, :html => {:multipart => true}) do |f| %>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group">
+        <%#= f.label :title %>
+        <label for="exampleInputEmail1">Title</label><br />
+        <%= f.text_field :title, :style =>"height:34px;" ,:class => "form-control" ,:placeholder => "Heading" %>
+      </div>
+    </div>
+    <div class="col-lg-6">
+       <%if !f.object.photos.blank?%>
+        <div class="field">
+          <label for="exampleInputEmail1">Post Image</label><br/>
+          <%=image_tag serve_post_path(@post.photos.first),:style=>"height:200px;" %><br/>
+          <br/>
+          <label for="exampleInputEmail1">Change Post Image</label>
+          <input type="file" name="file" id="photo_file" accept="image/*"><br/>
+        </div>
+      <%elsif %>
+        <div class="field">
+          <label for="exampleInputEmail1">Attach Image To Post</label>
+          <input type="file" name="file" id="photo_file" accept="image/*"><br/>
+        </div>
+      <%end%>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Add Image Description</label><br/>
+        <input type="text" name="photo[description]" class="form-control"  style="height:34px;" id="description" value="<%=f.object.photos.blank? ? '' : f.object.photos.first.description%>">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="form-group">
+          <%#= f.label :text%>
+           <%= tinymce_assets%>
+           <label for="exampleInputEmail1">Content</label>
+          <%= f.text_area :text,:class => "form-control tinymce" ,:rows =>f.object.id.blank? ? 14 : 14,:placeholder => "What's In Your Mind" %>
+          <%=tinymce%>
+        </div>
+        <div class="actions">
+          <%if f.object.id.blank?%>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.submit 'Create Post', :class=>"btn btn-primary pull-right"%>
+          <%else%>
+            <%= f.submit 'Update Post', :class=>"btn btn-primary pull-right"%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+<% end %>
+

@@ -1,0 +1,5 @@
+class AboutController < ApplicationController
+  layout 'application'
+  def about
+  end
+end

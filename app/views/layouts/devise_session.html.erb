@@ -1,0 +1,75 @@
+<html class="no-js" lang="en"><!--<![endif]--><head>
+ 
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    
+  <title>viyayo</title>
+  
+    <!-- Bootstrap core CSS -->
+    <link href="/login/bootstrap.css" rel="stylesheet">
+    <!-- Demo CSS -->
+    <link href="/login/demo.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet"  href="/login/login-theme-6.css">
+   
+    <link href="/login/animate-custom.css" rel="stylesheet"> 
+    <script src="/login/custom.html" type="text/javascript"></script>
+    <%= csrf_meta_tags %>
+    <style>
+.controls label {
+    display: inline-block;
+    width: 90px;
+    height: 20px;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 40px;
+}
+.controls input {
+    display: block;
+    margin: 0 auto -40px;
+}
+</style>
+ </head>
+    <body class="fade-in">
+     
+      <div class="container" id="login-block">
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+             
+             <div class="login-box clearfix animated flipInY">
+                <div class="page-icon animated bounceInDown">
+                  <img src="/login/user-icon.png" alt="Key icon">
+                </div>
+                <div class="login-logo">
+                  <a href="#"><img  style="height:30px;" src="/login/login-logo.png" alt="Company Logo"></a>
+                </div> 
+                <hr>
+                <div class="login-form">
+                  <!-- Start Error box -->
+                  <div class="alert alert-danger hide">
+                  <button type="button" class="close" data-dismiss="alert"> ×</button>
+                  <h4>Error!</h4>
+                   <%= devise_error_messages! %>
+              </div>
+              <%=yield%>
+               </div> 
+              </div>
+              
+          </div>
+      </div>
+      </div>
+     
+        <!-- End Login box -->
+      <footer class="container">
+        <p id="footer-text"><small>Copyright © 2013 <a href="<%=root_path%>">vivayo Pvt. Ltd.</a></small></p>
+      </footer>
+
+        <script src="/login/jquery.js"></script>
+        <script src="/login/bootstrap.js"></script> 
+        <script src="/login/placeholder-shim.js"></script>        
+<!--
+        <script src="/login/custom.js"></script>
+-->
+    
+
+</body></html>

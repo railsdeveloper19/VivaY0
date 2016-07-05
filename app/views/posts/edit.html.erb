@@ -1,0 +1,15 @@
+<div class="col-lg-1"></div>
+<div class="card col-lg-10">
+  <h1>Edit Campaign <small><%=@post.updated_at.strftime("%d %B %Y")%></small>
+    <span class="pull-right" style="margin-right:10px;"><a href="/posts/<%=@post.id%>" title="Show Campaign"><%=image_tag 'show_post.png',:style=>"height:55px;margin-right:10px;"%></a><a href="<%=root_path%>" title="Home"><%= image_tag 'back_home.png',:style=>"height:50px;"%></a></span>
+  </h1>
+  <hr>
+  <%= render 'form' %>
+</div>
+
+<!--<table class="table table-striped table-hover table-bordered">
+  <tr>
+    <td style="text-align:center;"></td>
+    <td style="text-align:center;"></td>
+  </td>
+</table>-->

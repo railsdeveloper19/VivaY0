@@ -1,0 +1,5 @@
+$("#comment_list_#{@post.id}").html("#{escape_javascript(render :partial => 'posts/comments_partial',  :locals => {:comments => @post_comments,:post=>@post} )}");
+$("#comment_size").text('#{!@post_comments.blank? ? @post.comments.size : 0}');
+//$("#like_count").text('#{@post.likes.size}');
+
+//$("#header_bloggerlive").html("#{escape_javascript(render :partial => 'common/session')}");

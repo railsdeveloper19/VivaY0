@@ -1,0 +1,2 @@
+$("#show_post_comment_div").html("#{escape_javascript( render :partial=>"/posts/post_comment_partial",:locals=>{:post=>@post,:comments => @comments})}");
+

@@ -1,0 +1,19 @@
+- if comments.present?
+    - comments.each do |comment|
+      .panel.panel-default
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :style => "margin-top:14px;margin-right:14px;", :type => "button"} &times;
+        .panel-body
+          %b>= comment.commenter.split('@')[0].titleize
+          \&nbsp;&nbsp;
+          %em= comment.body
+          %br/
+  - else
+    .alert.alert-warning
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      There is no comments to display
+  = text_area_tag :editor, "", :class => "tinymce form-control", :rows => 2, :id => "post_comment" ,:placeholder=>'Write Your Views' ,:autofocus=>"autofocus"
+  / <input type='text' name='' id="post_comment" placeholder='Whats your views' class="mceEditor"/>
+  - if user_signed_in?
+    %button#save_comment.btn.btn-primary Post
+  - else
+    = link_to "Post", post_all_post_path(@post),:class=>"btn btn-primary"

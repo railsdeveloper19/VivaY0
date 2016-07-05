@@ -1,0 +1,43 @@
+.row
+  .col-lg-1
+  .col-lg-10.card
+    .page-header
+      %h1
+        My Campaigns
+        %span{:class=>"pull-right"}
+          - if (user_signed_in? && (["admin","blogger"].include?(current_user.user_type)))
+            %a{:href=>"javascript:void(0);",:title=>"Grid View",:style=>"text-decoration:none;",:id=>"list_grid_view","data-view"=>"grid"}
+              %i.fa.fa-qrcode 
+
+          =will_paginate @posts, renderer: BootstrapPagination::Rails
+    #all_post_div
+      = render :partial =>'/posts/list_view_post'
+:javascript
+  $(document).ready(function(){
+    $('.pagination').addClass('pagination-sm pull-right');
+    $('.pagination').css("margin-right","-166px");
+  });
+  
+  $('#list_grid_view').click(function(){
+    var view = $(this).attr('data-view');
+    var page = $('.pagination .active span').text();
+    if (page == ""){
+      page = 1;
+    }
+    if (view == "grid"){
+      $('#list_grid_view i').removeClass('fa-qrcode');
+      $('#list_grid_view i').addClass('fa-bars');
+      $(this).attr('data-view','list');
+      $(this).attr('title','List View');
+    }else{
+       $('#list_grid_view i').removeClass('fa-bars');
+      $('#list_grid_view i').addClass('fa-qrcode');
+      $(this).attr('data-view','grid');
+      $(this).attr('title','Grid View');
+    }
+    $.ajax({
+        url : '/posts/1/list_grid_view',
+        method : 'get',
+        data :{'view' : view,'page' : page}
+      })
+  });

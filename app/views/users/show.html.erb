@@ -1,0 +1,89 @@
+<!-- Page Heading -->
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10 card">
+    <h1 class="page-header">
+        Profile
+        <span style='bottom:0px;' class="small pull-right"><%=current_user.email%></span>
+    </h1>
+   
+    <ol class="breadcrumb">
+      <li>
+          <i class="fa fa-home"></i>  <a href="<%=posts_path%>">Home</a>
+      </li>
+      <li class="active">
+          <i class="fa fa-edit"></i> Profile
+      </li>
+    </ol>
+  
+
+<!-- /.row -->
+<div class="row">
+  <form role="form" action="<%=edit_user_path(current_user.id)%>">
+    <div class="col-lg-6">
+      <div class="form-group">
+          <label>First name</label>
+          <p class="form-control-static"><%=current_user.first_name%></p>
+      </div>
+
+      <div class="form-group">
+          <label>Last name</label>
+          <p class="form-control-static" ><%=current_user.last_name%></p>
+      </div>
+      <div class="form-group">
+          <label>State</label>
+          <p class="form-control-static"><%=current_user.state%></p>
+      </div>
+      <div class="form-group">
+          <label>Address</label>
+          <p  class="form-control-static"><%=current_user.address%></p>
+      </div>
+
+      <div class="form-group">
+          <label>Gender</label>
+          <p class="form-control-static"><%=current_user.gender%></p>
+      </div>
+       <div class="form-group">
+          <label>Date of birth</label>
+          <p class="form-control-static" ><%=current_user.dob%></p>
+          
+      </div>
+      <div class="form-group">
+          <label>Contact no.</label>
+          <p class="form-control-static"><%=current_user.contact%></p>
+      </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Highest Qualification</label>
+            <p class="form-control-static"><%=current_user.qualification%></p>
+        </div>
+        <div class="form-group">
+            <label>Occupation</label>
+            <p class="form-control-static"><%=current_user.occupation%></p>
+        </div>
+        <div class="form-group">
+            <label>Career Objective</label>
+            <p class="form-control-static"><%=current_user.objective%></p>
+        </div>
+        
+        <div class="form-group">
+            <label>Work Exp. with Name of Organization</label>
+            <p class="form-control-static"><%=current_user.work%></p>
+        </div>
+        <div class="form-group">
+            <label>Few words</label><p>(ur hobbies, interest, anything u want to say)</p>
+            <p rows="3" class="form-control-static"><%=current_user.few_words%></p>
+        </div>
+        
+        <div class="form-group pull-right">
+      <button class="btn btn-success" type="submit"><i class="fa fa-edit"></i> Edit</button> 
+    </div>.
+    </div>
+    
+  </form>
+  <br/>
+</div>
+</div>
+</div>
+<!-- /.row -->

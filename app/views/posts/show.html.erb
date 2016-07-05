@@ -1,0 +1,39 @@
+<div class="col-lg-1"></div>
+<div class="col-lg-10 card">
+ 
+  <div class="panel-body">
+    <div class="media">
+        <a class="pull-left" href="">
+          <%if !@post.user.photos.blank?%>
+            <%= image_tag serve_post_path(@post.user.photos.first),:style=>"height:60px;width:60px;" %>
+          <%#elsif !@post.user.image.blank?%>
+            <%#= image_tag @post.user.image ,:style=>"height:60px;width:60px;"%>
+          <%else%>
+            <%= image_tag "default_avtar.jpeg" ,:style=>"height:60px;width:60px;"%>
+          <%end%>
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <span class="pull-right" style="margin-right:10px;">
+              <%if (user_signed_in? && ((current_user.user_type == "admin") || (current_user.id == @post.user_id))) %>
+                <a href="<%=edit_post_path(@post)%>" title="Edit Campaign"><%=image_tag "edit_post.png",:style=>"height:50px;margin-right:10px;"%></a>
+              <%end%>
+              <a href="<%=posts_path%>" title="Home"><%= image_tag 'back_home.png',:style=>"height:50px;"%></a>
+            </span>
+            <%=!@post.user.first_name.blank?  ? @post.user.first_name.titleize : @post.user.email.split('@')[0].titleize %><br/><small><%=display_event_time(@post)%></small><br/><h5><b> <%=@post.title%></b>
+          <hr>
+          </h5></h4>
+          <div id = "comment">
+            <%if !@post.photos.blank?%>
+              <%=image_tag serve_post_path(@post.photos.first),:style=>"height:300px;" %><br/><br/>
+              <small style="color:gray"><%=@post.photos.first.description%></small>
+              <hr>
+            <%end%> 
+            <%= @post.text.html_safe rescue nil%>
+          </div>
+          <%#= @post.text rescue nil%>
+        </div>
+      </div>
+  </div>
+</div>
+

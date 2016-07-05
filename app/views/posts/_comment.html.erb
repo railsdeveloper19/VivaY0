@@ -1,0 +1,25 @@
+
+<!-- Comments Form -->
+  <div class="well">
+      <h4>Leave a Comment:</h4>
+      
+          <div class="form-group">
+              <textarea rows="3" data-post=<%=post.id%> class="form-control post_comment"></textarea>
+          </div>
+    
+  </div>
+
+
+  <!-- Posted Comments -->
+
+  <!-- Comment -->
+  <div id="comment_list_<%=post.id%>">
+    <%= render :partial =>'/posts/comments_partial',:locals => {:post => post, :comments => comments} %>
+  </div>
+  
+<script type="text/javascript">
+ if($('#comment_scroll')[0] != undefined){
+    $('#comment_scroll').scrollTop($('#comment_scroll')[0].scrollHeight);
+  }
+</script>          
+              

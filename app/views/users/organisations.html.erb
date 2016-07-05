@@ -1,0 +1,63 @@
+
+<!-- Page Heading -->
+<div class="row">
+  <div class="col-lg-1"></div>
+    <div class="col-lg-10 card">
+        <h1 class="page-header">Organisations
+            <small>joined with vivayo</small>
+        </h1>
+    
+<!-- /.row -->
+
+<!-- Project One -->
+<%if !@orgs.blank?%>
+  <% @orgs.each do |org|%>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="#">
+              <%if !org.photos.blank?%>
+               <%=image_tag serve_post_path(org.photos.first),:style=>"width:700px;height:300px;",:class=>"img-responsive" %>
+               <%else%>
+                <img alt="" src="http://placehold.it/700x300" class="img-responsive">
+               <%end%>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <h3><%=org.first_name%></h3>
+            <h4><%=org.objective%></h4>
+            <p><%=org.work%></p>
+            <%if org.id != current_user.id%>
+              <%if check_joinus(org.id)%>
+                <a href="#" class="btn btn-default">Already Joined <span class="fa fa-thumbs-up"></span></a>
+              <%else%>
+                <a href="javascript:void(0);" id="join_btn_<%=org.id%>" data-org="<%=org.id%>" class="btn btn-primary joinus">Join Us <span class="fa fa-chevron-right"></span></a>
+              <%end%>
+            <%end%>
+        </div>
+    </div>
+    <hr>
+  <%end%>
+<%else%>
+  <div class="row text-center">
+    <h4>No organisation added yet</h4>
+  </div>
+<%end%>
+</div>
+</div>
+<script type="text/javascript">
+  $(document).on('click', '.joinus',function(){
+    var org_id = $(this).attr('data-org');
+    $.ajax({
+      url : "/users/"+<%=current_user.id%>+"/joinus",
+      method: 'get',
+      data: {'org_id' : org_id},
+      success: function(){
+                 $('#join_btn_'+org_id).removeClass('btn-primary');
+                 $('#join_btn_'+org_id).addClass('btn-default');
+                 $('#join_btn_'+org_id).text('Thanks for joining us');
+               }  
+    });
+  });
+</script> 
+       
+    

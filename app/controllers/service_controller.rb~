@@ -1,0 +1,5 @@
+class ServiceController < ApplicationController
+  layout 'application'
+  def service
+  end
+end

@@ -1,0 +1,34 @@
+//=will_paginate @posts, renderer: BootstrapPagination::Rails
+- @posts.each_with_index do |post,index|
+  .media
+    .pull-left
+      - if !post.user.photos.blank?
+        = image_tag serve_post_path(post.user.photos.first),:style=>"height:80px;width:80px;"
+      - else
+        = image_tag "default_avtar.jpeg" ,:style=>"height:60px;width:60px;"
+    .media-body
+      .grid_view
+        - if !post.photos.blank?
+          = image_tag serve_post_path(post.photos.first),:style=>"display:none;"
+      %h3.media-heading
+        = !post.user.first_name.nil? ? post.user.first_name : post.user.email.split('@')[0].titleize
+        %small{}
+          Comments
+          %span.primary.badge= post.comments.size
+        %br
+      = !post.title.nil? ? post.title : ''
+      = post.text.truncate(500).html_safe rescue nil
+      %h4.media-heading
+        .small.pull-right{:style=>"color:grey;margin-top:6px;"}
+          = display_event_time(post)
+        \&nbsp;&nbsp;                    
+        %a{:href=>"#{posts_path}?post_id=#{post.id}",:title=>"Comment",:style=>"text-decoration:none;"}
+          %i.fa.fa-comments-o
+        \&nbsp;
+        - if (user_signed_in? && ((current_user.user_type == "admin") || (current_user.id == post.user_id)))
+          %a{:href=>edit_post_path(post),:title=>"Edit Campaign",:style=>"text-decoration:none;"}
+            %i.fa.fa-pencil-square-o
+          \&nbsp;
+          %a{"data-confirm" => "Are you sure?", "data-method" => "delete", :href => "/posts/#{post.id}?from_page=all_post&view=list", :title => "Delete Campaign"}
+            %i.fa.fa-trash-o
+  %hr
